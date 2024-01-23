@@ -18,6 +18,8 @@ def main():
     if request.method == "POST":
         userMessage = request.json["userMessage"]
 
+        print(userMessage)
+
         chat_res = master_chatbot(userMessage)
 
         return jsonify({"message": chat_res})
