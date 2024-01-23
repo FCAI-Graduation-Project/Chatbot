@@ -1,199 +1,164 @@
 import json
-# hello
+
+# hello saad
 data = [
     [
-     {
-        "messages": [
         {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for pepper plant with disease name bacterial spot?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "user",
-            "content": "What is the cure for pepper plant with disease name bacterial spot?"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for potato plant with disease name early blight?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for potato plant with disease name late blight?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "user",
-            "content": "What is the cure for potato plant with disease name early blight?"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for tomato plant with disease name bacterial spot?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for tomato plant with disease name early blight?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "user",
-            "content": "What is the cure for potato plant with disease name late blight?"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for tomato plant with disease name late blight?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for tomato plant with disease name leaf mold?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "user",
-            "content": "What is the cure for tomato plant with disease name bacterial spot?"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for tomato plant with disease name septoria leaf spot?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for tomato plant with disease name spider mites two spotted spider mites?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "user",
-            "content": "What is the cure for tomato plant with disease name early blight?"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for tomato plant with disease name target spot?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for tomato plant with disease name yellowleaf curl  virus ?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
         {
-            "role": "user",
-            "content": "What is the cure for tomato plant with disease name late blight?"
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the cure for tomato plant with disease name mosaic virus?",
+                },
+                {"role": "assistant", "content": """"""},
+            ]
         },
-        {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
-        },
-        {
-            "role": "user",
-            "content": "What is the cure for tomato plant with disease name leaf mold?"
-        },
-        {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
-        },
-        {
-            "role": "user",
-            "content": "What is the cure for tomato plant with disease name septoria leaf spot?"
-        },
-        {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
-        },
-        {
-            "role": "user",
-            "content": "What is the cure for tomato plant with disease name spider mites two spotted spider mites?"
-        },
-        {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
-        },
-        {
-            "role": "user",
-            "content": "What is the cure for tomato plant with disease name target spot?"
-        },
-        {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
-        },
-        {
-            "role": "user",
-            "content": "What is the cure for tomato plant with disease name yellowleaf curl  virus ?"
-        },
-        {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
-    {
-        "messages": [
-        {
-            "role": "system",
-            "content": "You are a plant disease assistant, the user will give you plant name and plant disease. Give him the cure for the plant name and plant disease"
-        },
-        {
-            "role": "user",
-            "content": "What is the cure for tomato plant with disease name mosaic virus?"
-        },
-        {
-            "role": "assistant",
-            "content": """"""
-        }
-        ]
-    },
     ]
 ]
 
