@@ -1,17 +1,19 @@
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 
+from services.chatbot import master_chatbot
+
 load_dotenv()
 app = Flask(__name__)
 
 @app.route('/api/', methods=['POST'])
 def main():
     if request.method == "POST":
-        userInput = request.json['userInput']
+        userMessage = request.json['userMessage']
 
-        
+        chat_res = master_chatbot(userMessage)
 
-        return jsonify({'message': f'POST request handled with data: {userInput}'})
+        return jsonify({'message': chat_res})
 
 
 @app.errorhandler(404)
