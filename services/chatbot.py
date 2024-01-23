@@ -1,5 +1,5 @@
-def master_chatbot(userInput):
-    chat_res = userInput
+def master_chatbot(userMessage):
+    chat_res = userMessage
 
     # handle userInput
 
