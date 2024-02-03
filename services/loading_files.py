@@ -37,8 +37,6 @@ for i in tqdm(range(0, len(pages))):
     metadata = {"page_content": pages[i].page_content}
     # create document embeddings
     embeds = get_embedding(pages[i].page_content)
-    # get IDs
-    id = i
     # add everything to pinecone
     vec = [{"id": f"{i}", "values": embeds, "metadata": metadata}]
     print("Vector")
