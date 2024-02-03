@@ -55,7 +55,7 @@ for i in tqdm(range(0, 10)):
     # get IDs
     id = i
     # add everything to pinecone
-    vec = [{"id": f"{i}", "embeds": embeds, "metadata": metadata}]
+    vec = [{"id": f"{i}", "values": embeds, "metadata": metadata}]
     print("Vector")
     print(vec)
     pinecone_index.upsert(vectors=vec, namespace="book1")
