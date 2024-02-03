@@ -11,8 +11,7 @@ import dotenv
 
 dotenv.load_dotenv()
 
-print("SETTING UP: ")
-print("PINECONE: ")
+print("SETTING UP PINECONE: ")
 
 pc = Pinecone(
     api_key=os.getenv("PINECONE_API_KEY"),
@@ -32,40 +31,17 @@ print(f"Number of Characters in the first document: {len(pages[150].page_content
 print("===========================")
 
 print("WORD EMBEDDINGS: ")
-# faiss_index = FAISS.from_documents(pages, OpenAIEmbeddings())
-# faiss_index
-# docsearch = langchain_pincone.Pinecone.from_texts(
-#     [page.page_content for page in pages[:10]],
-#     OpenAIEmbeddings(),
-#     index_name=pinecone_index_name,
-# )
 
-# embeddings = []
-
-# pinecone_index.upsert(embeddings)
-
-
-# for i in tqdm(range(0, len(pages))):
-for i in tqdm(range(0, 10)):
+for i in tqdm(range(0, len(pages))):
     # first get metadata fields for this record
-    metadata = pages[i].page_content
+    metadata = {"page_content": pages[i].page_content}
     # create document embeddings
     embeds = get_embedding(pages[i].page_content)
-    print(embeds)
     # get IDs
     id = i
     # add everything to pinecone
     vec = [{"id": f"{i}", "values": embeds, "metadata": metadata}]
     print("Vector")
-    print(vec)
     pinecone_index.upsert(vectors=vec, namespace="book1")
-
-print("===========================")
-
-print("DOING SIMILARITY SEACRH")
-# docs = docsearch.similarity_search("how to manage Tomoato with early blight disease?")
-
-# for doc in docs:
-#     print(str(doc.metadata["page"]) + ":", doc.page_content)
 
 print("===========================")
