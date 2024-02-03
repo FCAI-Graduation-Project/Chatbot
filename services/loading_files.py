@@ -39,7 +39,6 @@ for i in tqdm(range(0, len(pages))):
     embeds = get_embedding(pages[i].page_content)
     # add everything to pinecone
     vec = [{"id": f"{i}", "values": embeds, "metadata": metadata}]
-    print("Vector")
     pinecone_index.upsert(vectors=vec, namespace="book1")
 
 print("===========================")
