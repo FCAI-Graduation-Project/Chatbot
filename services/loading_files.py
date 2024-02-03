@@ -30,18 +30,26 @@ print(f"Number of Characters in the first document: {len(pages[150].page_content
 
 print("===========================")
 
+print("PREPROCESSING")
+whole_content = []
+for i, page in enumerate(pages[:10]):
+    whole_content.append(page.page_content)
+
+print("===========================")
+
 print("WORD EMBEDDINGS: ")
 
-for i in tqdm(range(0, len(pages))):
-    # first get metadata fields for this record
-    metadata = {"page_content": pages[i].page_content}
-    # create document embeddings
-    embeds = get_embedding(pages[i].page_content)
-    # get IDs
-    id = i
-    # add everything to pinecone
-    vec = [{"id": f"{i}", "values": embeds, "metadata": metadata}]
-    print("Vector")
-    pinecone_index.upsert(vectors=vec, namespace="book1")
+
+# create document embeddings
+embeds = get_embedding(whole_content)
+print(len(embeds))
+print(embeds[0])
+print(len(embeds[0]))
+all_vecs = []
+# for i in tqdm(range(0, len(embeds))):
+# # add everything to pinecone
+#     all_vecs.append([{"id": f"{i}", "values": embeds[i], "metadata": pages[i].page_content}])
+# print("Vector")
+# pinecone_index.upsert(vectors=vec, namespace="book1")
 
 print("===========================")
