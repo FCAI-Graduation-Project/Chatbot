@@ -32,13 +32,16 @@ print("===========================")
 
 print("WORD EMBEDDINGS: ")
 
-for i in tqdm(range(0, len(pages))):
+total_vector_count = pinecone_index.describe_index_stats()["total_vector_count"]
+namespace_name = "book1"
+
+for i in tqdm(range(total_vector_count, len(pages))):
     # first get metadata fields for this record
     metadata = {"page_content": pages[i].page_content}
     # create document embeddings
     embeds = get_embedding(pages[i].page_content)
     # add everything to pinecone
     vec = [{"id": f"{i}", "values": embeds, "metadata": metadata}]
-    pinecone_index.upsert(vectors=vec, namespace="book1")
+    pinecone_index.upsert(vectors=vec, namespace=namespace_name)
 
 print("===========================")
