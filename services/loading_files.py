@@ -7,17 +7,14 @@ from calc_tokens import num_tokens_from_string
 from tqdm.auto import tqdm
 from pinecone import Pinecone, ServerlessSpec
 from get_embedding import get_embedding
+from pinecone_init import initialize_pinecone
 import dotenv
 
 dotenv.load_dotenv()
 
 print("SETTING UP PINECONE: ")
 
-pc = Pinecone(
-    api_key=os.getenv("PINECONE_API_KEY"),
-    environment=os.getenv("PINECONE_ENV"),
-)
-pinecone_index = pc.Index(os.getenv("PINECONE_INDEX"))
+pc, pinecone_index = initialize_pinecone()
 
 print("======================")
 
