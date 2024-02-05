@@ -11,7 +11,7 @@ dotenv.load_dotenv()
 def get_cure():
     # llm = ChatOpenAI(temperature=0)
     # chain = load_qa_chain(llm, chain_type="stuff")
-    query = "potato plant Managment of black dot disease?"
+    query = "potato plant Managment of late blight disease?"
     query_vec = get_embedding(query)
     _, pinecone_index = initialize_pinecone()
 
