@@ -1,11 +1,5 @@
-import os
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_community.vectorstores.faiss import FAISS
-from langchain_community.vectorstores import pinecone as langchain_pincone
-from langchain_openai import OpenAIEmbeddings
-from calc_tokens import num_tokens_from_string
 from tqdm.auto import tqdm
-from pinecone import Pinecone, ServerlessSpec
 from get_embedding import get_embedding
 from pinecone_init import initialize_pinecone
 import dotenv

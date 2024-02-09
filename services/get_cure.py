@@ -1,8 +1,6 @@
 from pinecone_init import initialize_pinecone
 import dotenv
 from get_embedding import get_embedding
-from langchain.chat_models import ChatOpenAI
-from langchain.chains.question_answering import load_qa_chain
 from calc_tokens import num_tokens_from_string
 
 dotenv.load_dotenv()
