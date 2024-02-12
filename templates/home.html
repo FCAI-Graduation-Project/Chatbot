@@ -1,0 +1,36 @@
+<!-- templates/login.html-->
+
+<html>
+
+<head>
+    <title>AI Chat bot</title>
+    <style>
+        div {
+            width: 400px;
+            border: 1px solid #007580;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div>
+    <!-- url_for will route the forms request to
+    appropriate function that user made to handle it.-->
+    <!--we will Retrieve submitted values of inputs
+    on the backend side using 'name' field of form.-->
+    <h1>AI Chat bot for Plants</h1>
+    <form method="GET"
+          action="{{ url_for('getQuestion') }}">
+        <input type="text"
+               name="user_question"
+               placeholder="Enter your message">
+        <button type="submit">submit</button>
+    </form>
+</div>
+
+</body>
+
+</html>
