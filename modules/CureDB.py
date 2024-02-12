@@ -11,7 +11,7 @@ class CureDB:
     def __init__(self) -> None:
         pass
 
-    def _initilializePinecone(self):
+    def __initPinecone(self):
         """
         Creates an object of pinecone to access my hosted vectors
         """
@@ -39,23 +39,7 @@ class CureDB:
         num_tokens = len(encoding.encode(string))
         return num_tokens
 
-    def getCure(self, label: str):
-        query = "potato plant Managment of late blight disease?"
-        query_vec = self.__getEmbedding(query)
-        _, pinecone_index = self.__initializePinecone()
-
-        query_output = pinecone_index.query(
-            vector=query_vec, top_k=5, namespace="book1"
-        )
-
-        matching_pages_ids = []
-        for vec in query_output["matches"]:
-            matching_pages_ids.append(vec["id"])
-
-        matching_pages_content = pinecone_index.fetch(
-            ids=matching_pages_ids, namespace="book1"
-        )
-
+    def __displayDocs(self, matching_pages_content):
         sum_text = ""
 
         for vec_id in matching_pages_content.to_dict()["vectors"].keys():
@@ -73,3 +57,36 @@ class CureDB:
             sum_text += page_content
 
         print(f"Tokens: {self.__calcTokens(sum_text)}")
+
+        return self.__calcTokens(sum_text)
+
+    def getCure(self, label: str):
+        # Get plant name and disease name
+        plantName = label.split("__")[0]
+        diseaseName = label.split("__")[1].replace("_", " ")
+
+        # get Word Embeddings
+        query = f"{plantName} plant Managment of {diseaseName} disease?"
+        query_vec = self.__getEmbeddings(query)
+
+        # Initilalize pinecone
+        _, pinecone_index = self.__initPinecone()
+
+        # Get queries from Pinecone
+        query_output = pinecone_index.query(
+            vector=query_vec, top_k=5, namespace="book1"
+        )
+
+        # Get relative docs' IDs
+        matching_pages_ids = []
+        for vec in query_output["matches"]:
+            matching_pages_ids.append(vec["id"])
+
+        # Get relative docs
+        matching_pages_content = pinecone_index.fetch(
+            ids=matching_pages_ids, namespace="book1"
+        )
+
+        total_tokens = self.__displayDocs(matching_pages_content)
+
+        return matching_pages_content, total_tokens
