@@ -4,8 +4,6 @@ import tiktoken
 from openai import OpenAI
 from pinecone import Pinecone
 import tensorflow as tf
-from keras.preprocessing import image
-from keras.applications.mobilenet_v2 import preprocess_input
 
 dotenv.load_dotenv()
 
@@ -26,7 +24,9 @@ class CureDB:
 
         return pinecone, pinecone_index
 
-    def __getEmbeddings(self, text: str, model: str = "text-embedding-3-small") -> list[float]:
+    def __getEmbeddings(
+        self, text: str, model: str = "text-embedding-3-small"
+    ) -> list[float]:
         """
         Return the Embeddings of a text
         """
@@ -55,13 +55,13 @@ class CureDB:
             print()
             print("=========================================")
 
-            sum_text += page_content
+            sum_text += page_content + "\n\n\n"
 
         print(f"Tokens: {self.__calcTokens(sum_text)}")
 
-        return self.__calcTokens(sum_text)
+        return sum_text, self.__calcTokens(sum_text)
 
-    def getCure(self, plantName: str, diseaseName: str):
+    def getCure(self, plantName: str, diseaseName: str, noDocs=5):
         # get Word Embeddings
         query = f"{plantName} plant Managment of {diseaseName} disease?"
         query_vec = self.__getEmbeddings(query)
@@ -71,7 +71,7 @@ class CureDB:
 
         # Get queries from Pinecone
         query_output = pinecone_index.query(
-            vector=query_vec, top_k=5, namespace="book1"
+            vector=query_vec, top_k=noDocs, namespace="book1"
         )
 
         # Get relative docs' IDs
@@ -84,6 +84,6 @@ class CureDB:
             ids=matching_pages_ids, namespace="book1"
         )
 
-        total_tokens = self.__displayDocs(matching_pages_content)
+        sum_text, total_tokens = self.__displayDocs(matching_pages_content)
 
-        return matching_pages_content, total_tokens
+        return sum_text, total_tokens
