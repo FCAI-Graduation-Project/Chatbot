@@ -2,7 +2,11 @@ from flask import Flask, request
 import tensorflow as tf
 from keras.preprocessing import image
 from keras.applications.mobilenet_v2 import preprocess_input
+from MlModel import MLModel
 import dotenv
+import numpy as np
+from PIL import Image
+from CureDB import CureDB
 
 dotenv.load_dotenv()
 
@@ -10,16 +14,19 @@ dotenv.load_dotenv()
 class PlantAssistantController:
     category = ["general question", "cure of disease", "other"]
 
-    def __init__(self, MLModel, ChatBotModel, View):
-        self.MlModel = MLModel
+    def __init__(self, MLModelInput, ChatBotModel, View):
+        self.MlModel = MLModelInput
         self.ChatBotModel = ChatBotModel
         self.view = View
         self.app = Flask(__name__)
         self.setupRoutes()
+        self.predictor = MLModel()
+        self.cureDB = CureDB()
 
     def setupRoutes(self):
-        self.app.route('/')(self.home)
-        self.app.route('/getQuestion', methods=['GET'])(self.getQuestion)
+        self.app.route("/")(self.home)
+        self.app.route("/getQuestion", methods=["GET"])(self.getQuestion)
+        self.app.route("/predictDisease", methods=["POST"])(self.predictDiseaseByImage)
 
     def run(self):
         self.app.run(debug=True, port=9000)
@@ -28,8 +35,8 @@ class PlantAssistantController:
         return self.view.renderHome()
 
     def getQuestion(self):
-        if request.method == 'GET':
-            userQuestion = request.args.get('user_question')
+        if request.method == "GET":
+            userQuestion = request.args.get("user_question")
             if userQuestion:
                 ret = self.ChatBotModel.getResponse(userQuestion).strip()
                 print(ret.strip())
@@ -42,6 +49,31 @@ class PlantAssistantController:
                 else:
                     return self.ChatBotModel.other()
             else:
-                return self.view.renderError('Empty question provided')
+                return self.view.renderError("Empty question provided")
+        else:
+            return self.view.renderHome()
+
+    def predictDiseaseByImage(self):
+        if request.method == "POST":
+            image = request.files["image"]
+            image = Image.open(image.stream)
+
+            image_reshaped = image.resize((128, 128))
+
+            image_np = np.array(image_reshaped)
+
+            image.show()
+
+            result = self.predictor.getDisease(image_np)
+
+            plantName = result.split("__")[0]
+            diseaseName = result.split("__")[1].replace("_", " ")
+
+            cureDocs, _ = self.cureDB.getCure(plantName, diseaseName)
+
+            return {
+                "prediction": result,
+                "cureDocs": cureDocs,
+            }
         else:
             return self.view.renderHome()
