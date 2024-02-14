@@ -45,3 +45,7 @@ if __name__ == "__main__":
 # print()
 # print(res)
 # print()
+'''
+0.25457075
+
+'''

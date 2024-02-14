@@ -62,10 +62,10 @@ class PlantAssistantController:
 
             image_np = np.array(image_reshaped)
 
-            image.show()
+            image_reshaped.show()
 
-            result = self.predictor.getDisease(image_np)
-
+            result = self.predictor.getDisease(image_reshaped)
+            print(result)
             plantName = result.split("__")[0]
             diseaseName = result.split("__")[1].replace("_", " ")
 

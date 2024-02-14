@@ -51,7 +51,7 @@ class CureDB:
             print(f"ID: {vec_id}")
             print("----")
             print()
-            print(page_content)
+            # print(page_content)
             print()
             print("=========================================")
 

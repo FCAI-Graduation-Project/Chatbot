@@ -8,100 +8,11 @@ import cv2
 from keras.applications.mobilenet_v2 import preprocess_input
 import numpy as np
 import dotenv
+import matplotlib.pyplot as plt
 
 dotenv.load_dotenv()
 
-labels = [
-    "Tomato__septoria_leaf_spot",
-    "Tea__anthracnose",
-    "Rice__hispa",
-    "Soybean__diabrotica_speciosa",
-    "Tomato__healthy",
-    "Gauva__diseased",
-    "Wheat__yellow_rust",
-    "Soybean__downy_mildew",
-    "Pomegranate__diseased",
-    "Apple__rust",
-    "Tea__algal_leaf",
-    "Pomegranate__healthy",
-    "Tomato__early_blight",
-    "Peach__bacterial_spot",
-    "Soybean__healthy",
-    "Potato__healthy",
-    "Cherry__healthy",
-    "Apple__healthy",
-    "Rice__neck_blast",
-    "Wheat__septoria",
-    "Jamun__healthy",
-    "Strawberry___leaf_scorch",
-    "Coffee__rust",
-    "Mango__healthy",
-    "Mango__diseased",
-    "Apple__black_rot",
-    "Soybean__powdery_mildew",
-    "Lemon__healthy",
-    "Pepper_bell__healthy",
-    "Strawberry__healthy",
-    "Cassava__healthy",
-    "Corn__healthy",
-    "Jamun__diseased",
-    "Corn__common_rust",
-    "Tomato__yellow_leaf_curl_virus",
-    "Coffee__cercospora_leaf_spot",
-    "Grape__black_measles",
-    "Rice__healthy",
-    "Tea__healthy",
-    "Soybean__caterpillar",
-    "Grape__leaf_blight_(isariopsis_leaf_spot)",
-    "Coffee__red_spider_mite",
-    "Soybean__rust",
-    "Tomato__target_spot",
-    "Tomato__bacterial_spot",
-    "Sugarcane__bacterial_blight",
-    "Tea__brown_blight",
-    "Sugarcane__healthy",
-    "Cucumber__healthy",
-    "Chili__whitefly",
-    "Cucumber__diseased",
-    "Soybean__bacterial_blight",
-    "Potato__early_blight",
-    "Chili__healthy",
-    "Tea__red_leaf_spot",
-    "Corn__gray_leaf_spot",
-    "Grape__black_rot",
-    "Potato__late_blight",
-    "Sugarcane__red_stripe",
-    "Cassava__mosaic_disease",
-    "Cassava__green_mottle",
-    "Tomato__late_blight",
-    "Pepper_bell__bacterial_spot",
-    "Chili__leaf spot",
-    "Rice__brown_spot",
-    "Lemon__diseased",
-    "Cassava__brown_streak_disease",
-    "Wheat__brown_rust",
-    "Tomato__spider_mites_(two_spotted_spider_mite)",
-    "Sugarcane__rust",
-    "Coffee__healthy",
-    "Tomato__leaf_mold",
-    "Cherry__powdery_mildew",
-    "Apple__scab",
-    "Soybean__southern_blight",
-    "Rice__leaf_blast",
-    "Corn__northern_leaf_blight",
-    "Gauva__healthy",
-    "Peach__healthy",
-    "Soybean__mosaic_virus",
-    "Chili__yellowish",
-    "Cassava__bacterial_blight",
-    "Tea__bird_eye_spot",
-    "Wheat__healthy",
-    "Sugarcane__red_rot",
-    "Chili__leaf curl",
-    "Grape__healthy",
-    "Tomato__mosaic_virus",
-]
-
+labels = ['Apple__black_rot', 'Apple__healthy', 'Apple__rust', 'Apple__scab', 'Cassava__bacterial_blight', 'Cassava__brown_streak_disease', 'Cassava__green_mottle', 'Cassava__healthy', 'Cassava__mosaic_disease', 'Cherry__healthy', 'Cherry__powdery_mildew', 'Chili__healthy', 'Chili__leaf_curl', 'Chili__leaf_spot', 'Chili__whitefly', 'Chili__yellowish', 'Coffee__cercospora_leaf_spot', 'Coffee__healthy', 'Coffee__red_spider_mite', 'Coffee__rust', 'Corn__common_rust', 'Corn__gray_leaf_spot', 'Corn__healthy', 'Corn__northern_leaf_blight', 'Cucumber__diseased', 'Cucumber__healthy', 'Gauva__diseased', 'Gauva__healthy', 'Grape__black_measles', 'Grape__black_rot', 'Grape__healthy', 'Grape__leaf_blight_(isariopsis_leaf_spot)', 'Jamun__diseased', 'Jamun__healthy', 'Lemon__diseased', 'Lemon__healthy', 'Mango__diseased', 'Mango__healthy', 'Peach__bacterial_spot', 'Peach__healthy', 'Pepper_bell__bacterial_spot', 'Pepper_bell__healthy', 'Pomegranate__diseased', 'Pomegranate__healthy', 'Potato__early_blight', 'Potato__healthy', 'Potato__late_blight', 'Rice__brown_spot', 'Rice__healthy', 'Rice__hispa', 'Rice__leaf_blast', 'Rice__neck_blast', 'Soybean__bacterial_blight', 'Soybean__caterpillar', 'Soybean__diabrotica_speciosa', 'Soybean__downy_mildew', 'Soybean__healthy', 'Soybean__mosaic_virus', 'Soybean__powdery_mildew', 'Soybean__rust', 'Soybean__southern_blight', 'Strawberry___leaf_scorch', 'Strawberry__healthy', 'Sugarcane__bacterial_blight', 'Sugarcane__healthy', 'Sugarcane__red_rot', 'Sugarcane__red_stripe', 'Sugarcane__rust', 'Tea__algal_leaf', 'Tea__anthracnose', 'Tea__bird_eye_spot', 'Tea__brown_blight', 'Tea__healthy', 'Tea__red_leaf_spot', 'Tomato__bacterial_spot', 'Tomato__early_blight', 'Tomato__healthy', 'Tomato__late_blight', 'Tomato__leaf_mold', 'Tomato__mosaic_virus', 'Tomato__septoria_leaf_spot', 'Tomato__spider_mites_(two_spotted_spider_mite)', 'Tomato__target_spot', 'Tomato__yellow_leaf_curl_virus', 'Wheat__brown_rust', 'Wheat__healthy', 'Wheat__septoria', 'Wheat__yellow_rust']
 
 class MLModel:
 
@@ -112,16 +23,34 @@ class MLModel:
         model = tf.keras.models.load_model("model.h5")
 
         # Load and preprocess the image using OpenCV
-        imgArray = tf.keras.preprocessing.image.img_to_array(img)
-        imgArray = preprocess_input(imgArray)
+        # imgArray = tf.keras.preprocessing.image.img_to_array(img)
+        # imgArray = preprocess_input(imgArray)
+        # plt.imshow(imgArray)
+        
+        # Display the original image
+        plt.subplot(1, 2, 1)
+        plt.imshow(img)
+        plt.title('Original Image')
 
+        # Prepare the image for prediction
+        finalImage = np.expand_dims(img, axis=0)
+
+        # Display the preprocessed image
+        plt.subplot(1, 2, 2)
+        plt.imshow(finalImage[0])
+        plt.title('Preprocessed Image')
+
+        plt.show()
+        
         # Make predictions
-        predictions = model.predict(
-            np.expand_dims(imgArray, axis=0)
-        )  # Add an extra dimension to match the model input shape
-
-        # Get the index of the class with the highest probability using argmax
+        predictions = model.predict(finalImage)
+        
         classIndex = np.argmax(predictions)
+        confidence = np.max(predictions)
         print("CLASS INDEX")
-        print(classIndex)
+        print(classIndex , type(classIndex))
+        print("Class name\n")
+        print(labels[classIndex])
+        print("softmax value")
+        print(confidence)
         return labels[classIndex]
