@@ -23,9 +23,7 @@ class CureDB:
 
         return pinecone, pinecone_index
 
-    def __getEmbeddings(
-        self, text: str, model: str = "text-embedding-3-small"
-    ) -> list[float]:
+    def __getEmbeddings(self, text: str, model: str = "text-embedding-3-small") -> list[float]:
         """
         Return the Embeddings of a text
         """
