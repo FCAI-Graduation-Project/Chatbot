@@ -58,14 +58,11 @@ class PlantAssistantController:
             image = request.files["image"]
             image = Image.open(image.stream)
 
-            image_reshaped = image.resize((128, 128))
+            img_resized = image.resize((128, 128))
+            result = self.predictor.getDisease(img_resized)
 
-            image_np = np.array(image_reshaped)
-
-            image_reshaped.show()
-
-            result = self.predictor.getDisease(image_reshaped)
             print(result)
+
             plantName = result.split("__")[0]
             diseaseName = result.split("__")[1].replace("_", " ")
 
