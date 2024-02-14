@@ -96,8 +96,8 @@ classes_dict = [
 ]
 
 def getDisease(img):
-    model = load_model("model.h5")
-    img = img.resize((128, 128))
+    model = load_model("TestModel.h5")
+    img = img.resize((224, 224))
     img_array = keras_image.img_to_array(img)  # Use the renamed module
     img_array = np.expand_dims(img_array, axis=0)
     img_array /= 255.0
