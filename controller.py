@@ -62,7 +62,10 @@ class PlantAssistantController:
             plantName = result.split("__")[0]
             diseaseName = result.split("__")[1].replace("_", " ")
 
+            # Get Relative Documents for cure
             cureDocs, _ = self.cureDB.getCure(plantName, diseaseName)
+
+            # Send documents to Chat GPT
 
             return {
                 "prediction": result,
