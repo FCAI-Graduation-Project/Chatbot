@@ -1,10 +1,6 @@
 from flask import Flask, request
-import tensorflow as tf
-from keras.preprocessing import image
-from keras.applications.mobilenet_v2 import preprocess_input
 from MlModel import MLModel
 import dotenv
-import numpy as np
 from PIL import Image
 from CureDB import CureDB
 

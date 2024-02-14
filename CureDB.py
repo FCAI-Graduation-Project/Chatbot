@@ -3,7 +3,6 @@ import dotenv
 import tiktoken
 from openai import OpenAI
 from pinecone import Pinecone
-import tensorflow as tf
 
 dotenv.load_dotenv()
 
