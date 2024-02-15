@@ -59,16 +59,17 @@ class ChatBotModel:
 
     def cureOfDisease(self, plantName, diseaseName):
         cure = CureDB()
-        matchingPagesContent, total_tokens = cure.getCure(plantName, diseaseName)
+        matchingPagesContent, bol, total_tokens = cure.getCureDocs(plantName, diseaseName)
         return matchingPagesContent
 
     def cureResponse(self, plantName, diseaseName, cureDocs, isHealthy):
         if isHealthy:
             return f"""
-                    The plant captured in the photo is thriving and identified as a {plantName} Plant. and I'm pleased to inform you that it is free from any signs of disease.
+                    The plant captured in the photo is thriving and identified as a {plantName} Plant. 
+                    and I'm pleased to inform you that it is free from any signs of disease.
                 """
 
-        template = """
+        template = f"""
                     The user has {plantName} plant with {diseaseName} disease.
                     Give the user a suitable treatment for the disease.
                     You are given a number of documents, use them to make a suitable treatment.
@@ -90,7 +91,21 @@ class ChatBotModel:
         )
 
         return res
-
+    
+    def summarize(self , text):
+        template = f"""
+                Write a well-designed summary with steps based on\
+                what you can understand from this {text} to give the user the steps of cure from the management section
+                """
+        prompt = PromptTemplate(template=template,
+                                input_variables=["text"],
+                                )
+        llm = OpenAI(temperature=0)
+        llmChain = LLMChain(prompt=prompt , llm =llm)
+        res = llmChain.run(
+            text=text
+        )
+        return res
 
 """
 The most suitable treatment for late blight disease in potato plants is a combination of several management practices. The first step is to avoid introducing the disease into the field by using disease-free seed tubers and destroying any cull or volunteer potatoes. Planting resistant varieties can also help to prevent the disease from spreading.\n\nIn terms of cultural practices, it is important to maintain good plant health by providing adequate air circulation and removing old vines after harvest. Chemical control can also be effective, with fungicides such as chlorothalonil and maneb being recommended for preventative use. Resistance to the disease can also be achieved by planting resistant cultivars such as Mountain Fresh, Mountain Supreme, and Plum Dandy.\n\nLate blight is caused by the fungus Phytophthora infestans, which can survive in potato tubers over the winter and be reintroduced into the field through infected seed potatoes or tomato transplants. The disease is favored by cool, moist weather and can spread rapidly, causing severe damage to foliage and tubers.\n\nSymptoms of late blight include pale-green, water-soaked spots on the leaf edges or tips, which can quickly expand and turn purplish, brownish, or blackish in color. Infected tubers will have brown, dry, sun

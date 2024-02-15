@@ -3,97 +3,11 @@ import numpy as np
 from PIL import Image
 from keras.models import load_model
 from keras.preprocessing import image as keras_image
+from ChatBotModel import ChatBotModel
+from getClassByIndex import getClassByIndex
+import dotenv
+dotenv.load_dotenv()
 
-classes_dict = [
-    "Apple__black_rot",
-    "Apple__healthy",
-    "Apple__rust",
-    "Apple__scab",
-    "Cassava__bacterial_blight",
-    "Cassava__brown_streak_disease",
-    "Cassava__green_mottle",
-    "Cassava__healthy",
-    "Cassava__mosaic_disease",
-    "Cherry__healthy",
-    "Cherry__powdery_mildew",
-    "Chili__healthy",
-    "Chili__leaf_curl",
-    "Chili__leaf_spot",
-    "Chili__whitefly",
-    "Chili__yellowish",
-    "Coffee__cercospora_leaf_spot",
-    "Coffee__healthy",
-    "Coffee__red_spider_mite",
-    "Coffee__rust",
-    "Corn__common_rust",
-    "Corn__gray_leaf_spot",
-    "Corn__healthy",
-    "Corn__northern_leaf_blight",
-    "Cucumber__diseased",
-    "Cucumber__healthy",
-    "Gauva__diseased",
-    "Gauva__healthy",
-    "Grape__black_measles",
-    "Grape__black_rot",
-    "Grape__healthy",
-    "Grape__leaf_blight_(isariopsis_leaf_spot)",
-    "Jamun__diseased",
-    "Jamun__healthy",
-    "Lemon__diseased",
-    "Lemon__healthy",
-    "Mango__diseased",
-    "Mango__healthy",
-    "Peach__bacterial_spot",
-    "Peach__healthy",
-    "Pepper_bell__bacterial_spot",
-    "Pepper_bell__healthy",
-    "Pomegranate__diseased",
-    "Pomegranate__healthy",
-    "Potato__early_blight",
-    "Potato__healthy",
-    "Potato__late_blight",
-    "Rice__brown_spot",
-    "Rice__healthy",
-    "Rice__hispa",
-    "Rice__leaf_blast",
-    "Rice__neck_blast",
-    "Soybean__bacterial_blight",
-    "Soybean__caterpillar",
-    "Soybean__diabrotica_speciosa",
-    "Soybean__downy_mildew",
-    "Soybean__healthy",
-    "Soybean__mosaic_virus",
-    "Soybean__powdery_mildew",
-    "Soybean__rust",
-    "Soybean__southern_blight",
-    "Strawberry___leaf_scorch",
-    "Strawberry__healthy",
-    "Sugarcane__bacterial_blight",
-    "Sugarcane__healthy",
-    "Sugarcane__red_rot",
-    "Sugarcane__red_stripe",
-    "Sugarcane__rust",
-    "Tea__algal_leaf",
-    "Tea__anthracnose",
-    "Tea__bird_eye_spot",
-    "Tea__brown_blight",
-    "Tea__healthy",
-    "Tea__red_leaf_spot",
-    "Tomato__bacterial_spot",
-    "Tomato__early_blight",
-    "Tomato__healthy",
-    "Tomato__late_blight",
-    "Tomato__leaf_mold",
-    "Tomato__mosaic_virus",
-    "Tomato__septoria_leaf_spot",
-    "Tomato__spider_mites_(two_spotted_spider_mite)",
-    "Tomato__target_spot",
-    "Tomato__yellow_leaf_curl_virus",
-    "Wheat__brown_rust",
-    "Wheat__healthy",
-    "Wheat__septoria",
-    "Wheat__yellow_rust",
-]
 
 def getDisease(img):
     model = load_model("TestModel.h5")
@@ -104,18 +18,38 @@ def getDisease(img):
     predictions = model.predict(img_array)
 
     class_index = np.argmax(predictions[0])
-    predicted_class = classes_dict[class_index]
+    predicted_class = getClassByIndex(class_index)
     return predicted_class, np.max(predictions[0])
 
-def general_questions():
+def askGeneralQuestion()-> None:
     question = st.text_input("Ask your question:")
+    # print(question)
     if st.button("Ask"):
-        # Here you can implement a function to process the question and generate the answer
-        # For now, let's just echo back the question as the answer
-        st.write("Your question:", question)
-        # st.write("Your answer:" , ans)
-
-def check_for_disease():
+        # st.write("Your question:", question)
+        # question = question.title()
+        # st.write("Test question" , question)
+        botModel = ChatBotModel()
+        ret = botModel.getResponse(question).strip()
+        # st.write("Test ret" , ret)
+        category = ["general question", "cure of disease", "other"]
+        ans = "Error"
+        if ret == category[0]:
+            ans = botModel.generalQuestion(question)
+        else:
+            ans = botModel.other()
+        st.write(ans)
+def cureOfPlant() ->None:
+    plantName = st.text_input("Enter your plant name")
+    diseaseName = st.text_input("Enter the disease name")
+    if st.button("Ask"):
+        botModel = ChatBotModel()
+        # if st.button("Send"):
+        ans = botModel.cureOfDisease(plantName , diseaseName)
+        finalSteps = botModel.summarize(ans)
+        ans = finalSteps
+        st.write(ans)
+    
+def check_for_disease() -> None:
     uploaded_file = st.file_uploader("Upload image", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:
         if st.button('Predict'):
@@ -125,9 +59,24 @@ def check_for_disease():
 
 st.title('🌱 Smart Plant Care🌱')
 
-task_option = st.radio("Choose a task:", ["Ask general questions", "Check for disease"])
+task_option = st.radio("Choose a task:", ["Ask general questions","cure of plant","Check for disease"])
 
 if task_option == "Ask general questions":
-    general_questions()
+    askGeneralQuestion()
+elif task_option == "cure of plant":
+    cureOfPlant()
 else:
     check_for_disease()
+
+
+# if st.button("Check for disease"):
+#     uploaded_file = st.file_uploader("Upload image", type=["jpg", "jpeg", "png"])
+#     if uploaded_file is not None:
+#         if st.button('Predict'):
+#             prediction, confidence = getDisease(Image.open(uploaded_file))
+#             st.image(uploaded_file, caption='Uploaded Image', use_column_width=True)
+#             st.write(f'Prediction: {prediction}, Confidence: {confidence}')
+    
+# if st.button("Ask a question"):
+#     response = askQuestion()
+#     st.write(response)
