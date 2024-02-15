@@ -23,6 +23,6 @@ print("======================")
 
 print("DELETING NAMESPACE: ")
 
-pinecone_index.delete(delete_all=True, namespace="book1")
+pinecone_index.delete(delete_all=True, namespace="book2")
 
 print("======================")
