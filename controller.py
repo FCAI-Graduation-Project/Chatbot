@@ -76,9 +76,16 @@ class PlantAssistantController:
             print(cureResponse)
             print("============================")
 
-            return {
-                "prediction": result,
-                "cureResponse": cureResponse,
-            }
+            # return {
+            #     "prediction": result,
+            #     "cureResponse": cureResponse,
+            # }
+
+            return f"""
+Disease Prediction:   {result}
+
+Cure Response:
+{cureResponse}
+                """
         else:
             return self.view.renderHome()

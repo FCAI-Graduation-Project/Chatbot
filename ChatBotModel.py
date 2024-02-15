@@ -68,13 +68,12 @@ class ChatBotModel:
                     The plant captured in the photo is thriving and identified as a {plantName} Plant. and I'm pleased to inform you that it is free from any signs of disease.
                 """
 
-        print(cureDocs)
-
         template = """
                     The user has {plantName} plant with {diseaseName} disease.
                     Give the user a suitable treatment for the disease.
                     You are given a number of documents, use them to make a suitable treatment.
-
+                    If you find a part in documents related to index, ignore it
+                    
                     ***
 
                     Docs:
@@ -94,5 +93,6 @@ class ChatBotModel:
 
 
 """
-Provide a step-by-step guide for treating [plantName] with [diseaseName], utilizing the information available in the provided documents.
+The most suitable treatment for late blight disease in potato plants is a combination of several management practices. The first step is to avoid introducing the disease into the field by using disease-free seed tubers and destroying any cull or volunteer potatoes. Planting resistant varieties can also help to prevent the disease from spreading.\n\nIn terms of cultural practices, it is important to maintain good plant health by providing adequate air circulation and removing old vines after harvest. Chemical control can also be effective, with fungicides such as chlorothalonil and maneb being recommended for preventative use. Resistance to the disease can also be achieved by planting resistant cultivars such as Mountain Fresh, Mountain Supreme, and Plum Dandy.\n\nLate blight is caused by the fungus Phytophthora infestans, which can survive in potato tubers over the winter and be reintroduced into the field through infected seed potatoes or tomato transplants. The disease is favored by cool, moist weather and can spread rapidly, causing severe damage to foliage and tubers.\n\nSymptoms of late blight include pale-green, water-soaked spots on the leaf edges or tips, which can quickly expand and turn purplish, brownish, or blackish in color. Infected tubers will have brown, dry, sun
+
 """
