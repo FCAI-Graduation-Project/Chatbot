@@ -9,6 +9,7 @@ dotenv.load_dotenv()
 
 class CureDB:
     def __init__(self) -> None:
+        self.namespaceName = "book2"
         pass
 
     def __initPinecone(self):
@@ -60,7 +61,7 @@ class CureDB:
 
         return sum_text, self.__calcTokens(sum_text)
 
-    def getCureDocs(self, plantName: str, diseaseName: str, noDocs=5):
+    def getCureDocs(self, plantName: str, diseaseName: str, noDocs=2):
         if diseaseName == "healthy":
             return (
                 "",
@@ -77,7 +78,7 @@ class CureDB:
 
         # Get queries from Pinecone
         query_output = pinecone_index.query(
-            vector=query_vec, top_k=noDocs, namespace="book1"
+            vector=query_vec, top_k=noDocs, namespace=self.namespaceName
         )
 
         # Get relative docs' IDs
@@ -85,9 +86,9 @@ class CureDB:
         for vec in query_output["matches"]:
             matching_pages_ids.append(vec["id"])
 
-        # Get relative docs
+        # Get relative docs by IDs
         matching_pages_content = pinecone_index.fetch(
-            ids=matching_pages_ids, namespace="book1"
+            ids=matching_pages_ids, namespace=self.namespaceName
         )
 
         sum_text, total_tokens = self.__displayDocs(matching_pages_content)
