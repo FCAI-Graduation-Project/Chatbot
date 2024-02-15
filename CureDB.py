@@ -23,7 +23,9 @@ class CureDB:
 
         return pinecone, pinecone_index
 
-    def __getEmbeddings(self, text: str, model: str = "text-embedding-3-small") -> list[float]:
+    def __getEmbeddings(
+        self, text: str, model: str = "text-embedding-3-small"
+    ) -> list[float]:
         """
         Return the Embeddings of a text
         """
@@ -48,7 +50,7 @@ class CureDB:
             print(f"ID: {vec_id}")
             print("----")
             print()
-            # print(page_content)
+            print(page_content)
             print()
             print("=========================================")
 
@@ -58,7 +60,14 @@ class CureDB:
 
         return sum_text, self.__calcTokens(sum_text)
 
-    def getCure(self, plantName: str, diseaseName: str, noDocs=5):
+    def getCureDocs(self, plantName: str, diseaseName: str, noDocs=5):
+        if diseaseName == "healthy":
+            return (
+                "",
+                True,
+                0,
+            )
+
         # get Word Embeddings
         query = f"{plantName} plant Managment of {diseaseName} disease?"
         query_vec = self.__getEmbeddings(query)
@@ -83,4 +92,4 @@ class CureDB:
 
         sum_text, total_tokens = self.__displayDocs(matching_pages_content)
 
-        return sum_text, total_tokens
+        return sum_text, False, total_tokens

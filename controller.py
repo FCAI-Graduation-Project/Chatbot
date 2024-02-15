@@ -3,6 +3,8 @@ from MlModel import MLModel
 import dotenv
 from PIL import Image
 from CureDB import CureDB
+from langchain.llms.openai import OpenAI
+from ChatBotModel import ChatBotModel
 
 dotenv.load_dotenv()
 
@@ -10,7 +12,7 @@ dotenv.load_dotenv()
 class PlantAssistantController:
     category = ["general question", "cure of disease", "other"]
 
-    def __init__(self, MLModelInput, ChatBotModel, View):
+    def __init__(self, MLModelInput, ChatBotModel: ChatBotModel, View):
         self.MlModel = MLModelInput
         self.ChatBotModel = ChatBotModel
         self.view = View
@@ -63,13 +65,16 @@ class PlantAssistantController:
             diseaseName = result.split("__")[1].replace("_", " ")
 
             # Get Relative Documents for cure
-            cureDocs, _ = self.cureDB.getCure(plantName, diseaseName)
+            cureDocs, isHealthy, _ = self.cureDB.getCureDocs(plantName, diseaseName)
 
             # Send documents to Chat GPT
+            cureResponse = self.ChatBotModel.cureResponse(
+                plantName, diseaseName, cureDocs, isHealthy
+            )
 
             return {
                 "prediction": result,
-                "cureDocs": cureDocs,
+                "cureResponse": cureResponse,
             }
         else:
             return self.view.renderHome()
