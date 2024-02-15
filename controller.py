@@ -72,6 +72,10 @@ class PlantAssistantController:
                 plantName, diseaseName, cureDocs, isHealthy
             )
 
+            print("========CURE RESPONSE ======")
+            print(cureResponse)
+            print("============================")
+
             return {
                 "prediction": result,
                 "cureResponse": cureResponse,
