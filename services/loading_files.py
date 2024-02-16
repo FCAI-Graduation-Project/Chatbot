@@ -25,23 +25,23 @@ print("======================")
 #     print("=================")
 
 
-# total_vector_count = pinecone_index.describe_index_stats()["total_vector_count"]
-namespace_name = "book1"
+# # total_vector_count = pinecone_index.describe_index_stats()["total_vector_count"]
+# namespace_name = "book1"
 
-# this list map function just convetts list of integers to list of strings, list is from 64 to 658
-vecs_map = pinecone_index.fetch(
-    # list(map(str, range(64, 358))), namespace=namespace_name
-    list(map(str, range(358, 658))),
-    namespace=namespace_name,
-)["vectors"]
+# # this list map function just convetts list of integers to list of strings, list is from 64 to 658
+# vecs_map = pinecone_index.fetch(
+#     # list(map(str, range(64, 358))), namespace=namespace_name
+#     list(map(str, range(358, 658))),
+#     namespace=namespace_name,
+# )["vectors"]
 
-# print(vecs["vectors"])
+# # print(vecs["vectors"])
 
-vec_list = []
-for key in vecs_map.keys():
-    vec_list.append(vecs_map[key])
+# vec_list = []
+# for key in vecs_map.keys():
+#     vec_list.append(vecs_map[key])
 
-pinecone_index.upsert(vectors=vec_list, namespace="book2")
+# pinecone_index.upsert(vectors=vec_list, namespace="book2")
 
 
 # print("===========================")
